@@ -51,12 +51,47 @@
             margin-bottom: 20px;
         }
         
-        .countdown-container {
-            background: rgba(147, 112, 219, 0.15);
-            padding: 15px;
-            border-radius: 15px;
+        .timers-container {
             margin-bottom: 20px;
+        }
+        
+        .timers-toggle {
+            background: rgba(147, 112, 219, 0.15);
+            padding: 12px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             border: 2px solid rgba(147, 112, 219, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .timers-toggle:hover {
+            background: rgba(147, 112, 219, 0.25);
+        }
+        
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        
+        .timers-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 0 0 15px 15px;
+            margin-top: -2px;
+        }
+        
+        .timers-content.active {
+            max-height: 300px;
+        }
+        
+        .countdown-container {
+            padding: 15px;
+            border-bottom: 1px solid rgba(147, 112, 219, 0.2);
         }
         
         .countdown-title {
@@ -202,24 +237,56 @@
             <h1>霖月，出道快乐！</h1>
             <p class="subtitle">愿你的虚拟之旅星光璀璨，充满欢笑与感动</p>
             
-            <div class="countdown-container">
-                <div class="countdown-title" id="countdown-title">距离出道还有</div>
-                <div class="countdown">
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="days">00</div>
-                        <div class="countdown-label">天</div>
+            <div class="timers-container">
+                <div class="timers-toggle" id="timers-toggle">
+                    <span>时间统计</span>
+                    <span class="toggle-icon">▼</span>
+                </div>
+                <div class="timers-content" id="timers-content">
+                    <!-- 出道倒计时/正计时 -->
+                    <div class="countdown-container">
+                        <div class="countdown-title" id="debut-title">距离出道还有</div>
+                        <div class="countdown">
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="debut-days">00</div>
+                                <div class="countdown-label">天</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="debut-hours">00</div>
+                                <div class="countdown-label">时</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="debut-minutes">00</div>
+                                <div class="countdown-label">分</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="debut-seconds">00</div>
+                                <div class="countdown-label">秒</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="hours">00</div>
-                        <div class="countdown-label">时</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="minutes">00</div>
-                        <div class="countdown-label">分</div>
-                    </div>
-                    <div class="countdown-item">
-                        <div class="countdown-number" id="seconds">00</div>
-                        <div class="countdown-label">秒</div>
+                    
+                    <!-- 开播正计时 -->
+                    <div class="countdown-container">
+                        <div class="countdown-title">开播至今已有</div>
+                        <div class="countdown">
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="broadcast-days">00</div>
+                                <div class="countdown-label">天</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="broadcast-hours">00</div>
+                                <div class="countdown-label">时</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="broadcast-minutes">00</div>
+                                <div class="countdown-label">分</div>
+                            </div>
+                            <div class="countdown-item">
+                                <div class="countdown-number" id="broadcast-seconds">00</div>
+                                <div class="countdown-label">秒</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -232,12 +299,12 @@
         
         <div class="intro">
             <h3>你好，我是霖月！</h3>
-            <p>我是一颗来自虚拟星空的月亮，喜欢唱歌、游戏和与大家分享快乐。从今天开始，让我们一起创造属于我们的美好回忆吧！</p>
+            <p>我是一只来自虚拟星空的兔子，喜欢游戏、聊天和与大家分享快乐。从今天开始，让我们一起创造属于我们的美好回忆吧！</p>
         </div>
         
         <div class="blessing">
             <h3>Zen的祝福</h3>
-            <p>从你发布第一条预告开始，我就被你的独特魅力所吸引。你的声音如同月光般温柔，你的笑容能照亮整个夜空。虽然我只是众多粉丝中的一员，但我会一直在这里支持你，陪伴你走过每一段旅程。霖月，出道快乐！愿你在这条虚拟之路上绽放最耀眼的光芒，收获满满的快乐与感动。我会一直为你加油！</p>
+            <p>从你第一次开播开始，我就被你的独特魅力所吸引。你的声音如同月光般温柔，你的笑容能照亮整个夜空。虽然我只是众多粉丝中的一员，但我会一直在这里支持你，陪伴你走过每一段旅程。霖月，出道快乐！愿你在这条虚拟之路上绽放最耀眼的光芒，收获满满的快乐与感动。我会一直为你加油！</p>
         </div>
         
         <div class="links">
@@ -245,8 +312,7 @@
         </div>
         
         <div class="footer">
-            <p>Made with ❤️ for 霖月 - 出道纪念</p>
-            <p>© 2024 霖月 All Rights Reserved</p>
+            <p>Made for 霖月 by Zen</p>
         </div>
     </div>
 
@@ -254,21 +320,26 @@
         // 设置出道时间：2025年10月6日22:00
         const debutTime = new Date('2025-10-06T22:00:00').getTime();
         
+        // 设置开播时间：2025年6月22日12:00
+        const broadcastTime = new Date('2025-06-22T12:00:00').getTime();
+        
         // 更新倒计时函数
         function updateCountdown() {
             const now = new Date().getTime();
-            const distance = debutTime - now;
             
-            const daysElement = document.getElementById('days');
-            const hoursElement = document.getElementById('hours');
-            const minutesElement = document.getElementById('minutes');
-            const secondsElement = document.getElementById('seconds');
-            const titleElement = document.getElementById('countdown-title');
+            // 出道倒计时/正计时
+            const debutDistance = debutTime - now;
+            
+            const debutDaysElement = document.getElementById('debut-days');
+            const debutHoursElement = document.getElementById('debut-hours');
+            const debutMinutesElement = document.getElementById('debut-minutes');
+            const debutSecondsElement = document.getElementById('debut-seconds');
+            const debutTitleElement = document.getElementById('debut-title');
             
             // 如果倒计时结束，切换为正计时
-            if (distance < 0) {
+            if (debutDistance < 0) {
                 // 计算已经过去的时间
-                const timePassed = Math.abs(distance);
+                const timePassed = Math.abs(debutDistance);
                 
                 // 计算天、时、分、秒
                 const daysPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24));
@@ -277,35 +348,55 @@
                 const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
                 
                 // 更新显示
-                daysElement.textContent = daysPassed.toString().padStart(2, '0');
-                hoursElement.textContent = hoursPassed.toString().padStart(2, '0');
-                minutesElement.textContent = minutesPassed.toString().padStart(2, '0');
-                secondsElement.textContent = secondsPassed.toString().padStart(2, '0');
+                debutDaysElement.textContent = daysPassed.toString().padStart(2, '0');
+                debutHoursElement.textContent = hoursPassed.toString().padStart(2, '0');
+                debutMinutesElement.textContent = minutesPassed.toString().padStart(2, '0');
+                debutSecondsElement.textContent = secondsPassed.toString().padStart(2, '0');
                 
                 // 更新标题
-                titleElement.textContent = "已经出道";
+                debutTitleElement.textContent = "已经出道";
                 
                 // 添加庆祝效果
-                titleElement.style.color = "#e94560";
-                titleElement.style.fontWeight = "bold";
+                debutTitleElement.style.color = "#e94560";
+                debutTitleElement.style.fontWeight = "bold";
             } else {
                 // 计算剩余时间
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                const days = Math.floor(debutDistance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((debutDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((debutDistance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((debutDistance % (1000 * 60)) / 1000);
                 
                 // 更新显示
-                daysElement.textContent = days.toString().padStart(2, '0');
-                hoursElement.textContent = hours.toString().padStart(2, '0');
-                minutesElement.textContent = minutes.toString().padStart(2, '0');
-                secondsElement.textContent = seconds.toString().padStart(2, '0');
+                debutDaysElement.textContent = days.toString().padStart(2, '0');
+                debutHoursElement.textContent = hours.toString().padStart(2, '0');
+                debutMinutesElement.textContent = minutes.toString().padStart(2, '0');
+                debutSecondsElement.textContent = seconds.toString().padStart(2, '0');
                 
                 // 更新标题
-                titleElement.textContent = "距离出道还有";
-                titleElement.style.color = "#9370db";
-                titleElement.style.fontWeight = "normal";
+                debutTitleElement.textContent = "距离出道还有";
+                debutTitleElement.style.color = "#9370db";
+                debutTitleElement.style.fontWeight = "normal";
             }
+            
+            // 开播正计时
+            const broadcastDistance = now - broadcastTime;
+            
+            const broadcastDaysElement = document.getElementById('broadcast-days');
+            const broadcastHoursElement = document.getElementById('broadcast-hours');
+            const broadcastMinutesElement = document.getElementById('broadcast-minutes');
+            const broadcastSecondsElement = document.getElementById('broadcast-seconds');
+            
+            // 计算已经开播的时间
+            const broadcastDaysPassed = Math.floor(broadcastDistance / (1000 * 60 * 60 * 24));
+            const broadcastHoursPassed = Math.floor((broadcastDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const broadcastMinutesPassed = Math.floor((broadcastDistance % (1000 * 60 * 60)) / (1000 * 60));
+            const broadcastSecondsPassed = Math.floor((broadcastDistance % (1000 * 60)) / 1000);
+            
+            // 更新显示
+            broadcastDaysElement.textContent = broadcastDaysPassed.toString().padStart(2, '0');
+            broadcastHoursElement.textContent = broadcastHoursPassed.toString().padStart(2, '0');
+            broadcastMinutesElement.textContent = broadcastMinutesPassed.toString().padStart(2, '0');
+            broadcastSecondsElement.textContent = broadcastSecondsPassed.toString().padStart(2, '0');
         }
         
         // 初始调用一次
@@ -313,6 +404,16 @@
         
         // 每秒更新一次
         setInterval(updateCountdown, 1000);
+        
+        // 折叠/展开功能
+        const timersToggle = document.getElementById('timers-toggle');
+        const timersContent = document.getElementById('timers-content');
+        const toggleIcon = document.querySelector('.toggle-icon');
+        
+        timersToggle.addEventListener('click', function() {
+            timersContent.classList.toggle('active');
+            toggleIcon.textContent = timersContent.classList.contains('active') ? '▲' : '▼';
+        });
     </script>
 </body>
 </html>
