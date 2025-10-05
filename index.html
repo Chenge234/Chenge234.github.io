@@ -5,54 +5,120 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>霖月出道纪念</title>
     <style>
+        /* 重置样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Microsoft YaHei', sans-serif;
         }
         
         body {
+            font-family: 'Microsoft YaHei', sans-serif;
             background: linear-gradient(135deg, #f5f0ff, #e6e6fa, #d8bfd8);
             color: #4b0082;
             min-height: 100vh;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
         
-        .card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
+        .page-container {
+            max-width: 800px;
             width: 100%;
-            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 30px;
             box-shadow: 0 10px 30px rgba(147, 112, 219, 0.2);
             border: 1px solid rgba(147, 112, 219, 0.3);
         }
         
         .header {
+            text-align: center;
             margin-bottom: 30px;
         }
         
-        h1 {
+        .header h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
             color: #9370db;
+            margin-bottom: 10px;
             text-shadow: 0 0 10px rgba(147, 112, 219, 0.3);
         }
         
-        .subtitle {
+        .header p {
             font-size: 1.2rem;
             color: #8a2be2;
-            margin-bottom: 20px;
         }
         
-        .timers-container {
-            margin-bottom: 20px;
+        .avatar-section {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .avatar-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 40px; /* 增加底部间距给火焰留空间 */
+        }
+        
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 5px solid #9370db;
+            box-shadow: 0 0 20px rgba(147, 112, 219, 0.3);
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+        
+        .fire-container {
+            position: absolute;
+            bottom: -50px; /* 调整火焰位置，确保在头像下方 */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .fire-emoji {
+            font-size: 4rem; /* 放大火焰 */
+            filter: drop-shadow(0 0 8px rgba(255, 69, 0, 0.8));
+            animation: fire-flicker 0.3s infinite alternate;
+            display: inline-block;
+            line-height: 1;
+        }
+        
+        @keyframes fire-flicker {
+            0% { 
+                transform: scale(1) translateY(0); 
+                opacity: 0.8; 
+            }
+            100% { 
+                transform: scale(1.2) translateY(-5px); 
+                opacity: 1; 
+            }
+        }
+        
+        .blessing-section {
+            background: rgba(147, 112, 219, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 4px solid #9370db;
+        }
+        
+        .blessing-section h3 {
+            color: #9370db;
+            margin-bottom: 10px;
+        }
+        
+        .timers-section {
+            margin-bottom: 30px;
         }
         
         .timers-toggle {
@@ -64,16 +130,7 @@
             justify-content: space-between;
             align-items: center;
             border: 2px solid rgba(147, 112, 219, 0.3);
-            transition: all 0.3s;
-        }
-        
-        .timers-toggle:hover {
-            background: rgba(147, 112, 219, 0.25);
-        }
-        
-        .toggle-icon {
-            font-size: 1.2rem;
-            transition: transform 0.3s;
+            margin-bottom: 0;
         }
         
         .timers-content {
@@ -82,31 +139,30 @@
             transition: max-height 0.3s ease-out;
             background: rgba(255, 255, 255, 0.6);
             border-radius: 0 0 15px 15px;
-            margin-top: -2px;
         }
         
         .timers-content.active {
             max-height: 300px;
         }
         
-        .countdown-container {
+        .timer-container {
             padding: 15px;
             border-bottom: 1px solid rgba(147, 112, 219, 0.2);
         }
         
-        .countdown-title {
+        .timer-title {
             font-size: 1.2rem;
             color: #9370db;
             margin-bottom: 10px;
         }
         
-        .countdown {
+        .timer-display {
             display: flex;
             justify-content: center;
             gap: 15px;
         }
         
-        .countdown-item {
+        .timer-unit {
             background: rgba(255, 255, 255, 0.7);
             padding: 10px;
             border-radius: 10px;
@@ -114,61 +170,88 @@
             box-shadow: 0 4px 8px rgba(147, 112, 219, 0.2);
         }
         
-        .countdown-number {
+        .timer-number {
             font-size: 1.8rem;
             font-weight: bold;
             color: #9370db;
         }
         
-        .countdown-label {
+        .timer-label {
             font-size: 0.8rem;
             color: #8a2be2;
             margin-top: 5px;
         }
         
-        .avatar {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            border: 5px solid #9370db;
-            box-shadow: 0 0 20px rgba(147, 112, 219, 0.3);
-            overflow: hidden;
-        }
-        
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .intro {
+        .game-section {
             margin-bottom: 30px;
-            line-height: 1.6;
-            background: rgba(147, 112, 219, 0.1);
-            padding: 20px;
-            border-radius: 15px;
+            text-align: center;
         }
         
-        .blessing {
-            margin-bottom: 30px;
-            text-align: left;
-            background: rgba(147, 112, 219, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 4px solid #9370db;
-        }
-        
-        .blessing h3 {
+        .game-section h3 {
             color: #9370db;
             margin-bottom: 10px;
         }
         
-        .links {
-            margin-top: 30px;
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 20px auto;
         }
         
-        .link-button {
+        .memory-card {
+            width: 80px;
+            height: 80px;
+            background-color: #9370db;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: transparent;
+            transition: all 0.3s;
+            user-select: none;
+        }
+        
+        .memory-card.flipped {
+            background-color: #f5f0ff;
+            color: #4b0082;
+        }
+        
+        .memory-card.matched {
+            background-color: #e94560;
+            color: white;
+            cursor: default;
+        }
+        
+        .game-info {
+            margin-top: 20px;
+        }
+        
+        .game-btn {
+            padding: 8px 16px;
+            background: rgba(147, 112, 219, 0.2);
+            color: #4b0082;
+            border: 1px solid #9370db;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 5px;
+        }
+        
+        .game-btn:hover {
+            background: #9370db;
+            color: white;
+        }
+        
+        .links-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .link-btn {
             display: inline-block;
             padding: 12px 25px;
             background: rgba(147, 112, 219, 0.2);
@@ -178,149 +261,170 @@
             border: 1px solid #9370db;
             transition: all 0.3s;
             font-size: 1.1rem;
-            margin: 0 10px;
         }
         
-        .link-button:hover {
+        .link-btn:hover {
             background: #9370db;
             color: white;
-            transform: scale(1.05);
         }
         
         .footer {
-            margin-top: 30px;
+            text-align: center;
             padding-top: 20px;
             border-top: 1px solid rgba(147, 112, 219, 0.2);
             color: #8a2be2;
-            font-size: 0.9rem;
         }
         
-        /* 响应式设计 */
         @media (max-width: 600px) {
-            .card {
+            .page-container {
                 padding: 20px;
             }
             
-            h1 {
+            .header h1 {
                 font-size: 2rem;
             }
             
-            .avatar {
+            .avatar-container {
                 width: 150px;
                 height: 150px;
             }
             
-            .countdown {
+            .fire-emoji {
+                font-size: 3rem;
+            }
+            
+            .timer-display {
                 gap: 10px;
             }
             
-            .countdown-item {
+            .timer-unit {
                 min-width: 60px;
                 padding: 8px;
             }
             
-            .countdown-number {
+            .timer-number {
                 font-size: 1.5rem;
             }
             
-            .link-button {
-                display: block;
-                margin: 10px auto;
-                width: 80%;
+            .game-board {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+            
+            .memory-card {
+                width: 70px;
+                height: 70px;
+                font-size: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="card">
+    <div class="page-container">
+        <!-- 头部区域 -->
         <div class="header">
             <h1>霖月，出道快乐！</h1>
-            <p class="subtitle">愿你的虚拟之旅星光璀璨，充满欢笑与感动</p>
-            
-            <div class="timers-container">
-                <div class="timers-toggle" id="timers-toggle">
-                    <span>时间统计</span>
-                    <span class="toggle-icon">▼</span>
-                </div>
-                <div class="timers-content" id="timers-content">
-                    <!-- 出道倒计时/正计时 -->
-                    <div class="countdown-container">
-                        <div class="countdown-title" id="debut-title">距离出道还有</div>
-                        <div class="countdown">
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="debut-days">00</div>
-                                <div class="countdown-label">天</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="debut-hours">00</div>
-                                <div class="countdown-label">时</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="debut-minutes">00</div>
-                                <div class="countdown-label">分</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="debut-seconds">00</div>
-                                <div class="countdown-label">秒</div>
-                            </div>
+            <p>愿你的虚拟之旅星光璀璨，充满欢笑与感动</p>
+        </div>
+        
+        <!-- 头像区域 - 带烤火效果 -->
+        <div class="avatar-section">
+            <div class="avatar-container">
+                <img src="avatar.jpg" alt="霖月" class="avatar" id="avatar">
+            </div>
+            <div class="fire-container">
+                <div class="fire-emoji" id="fire-emoji">🔥🔥🔥</div>
+            </div>
+        </div>
+        
+        <!-- 祝福区域 -->
+        <div class="blessing-section">
+            <h3>Zen的祝福</h3>
+            <p>从你第一次开播开始，我就被你的独特魅力所吸引。你的声音如同月光般温柔，你的笑容能照亮整个夜空。虽然我只是众多粉丝中的一员，但我会一直在这里支持你，陪伴你走过每一段旅程。霖月，出道快乐！愿你在这条虚拟之路上绽放最耀眼的光芒，收获满满的快乐与感动。我会一直为你加油！</p>
+        </div>
+        
+        <!-- 计时器区域 -->
+        <div class="timers-section">
+            <div class="timers-toggle" id="timers-toggle">
+                <span>时间统计</span>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="timers-content" id="timers-content">
+                <!-- 出道倒计时/正计时 -->
+                <div class="timer-container">
+                    <div class="timer-title" id="debut-title">距离出道还有</div>
+                    <div class="timer-display">
+                        <div class="timer-unit">
+                            <div class="timer-number" id="debut-days">00</div>
+                            <div class="timer-label">天</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-number" id="debut-hours">00</div>
+                            <div class="timer-label">时</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-number" id="debut-minutes">00</div>
+                            <div class="timer-label">分</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-number" id="debut-seconds">00</div>
+                            <div class="timer-label">秒</div>
                         </div>
                     </div>
-                    
-                    <!-- 开播正计时 -->
-                    <div class="countdown-container">
-                        <div class="countdown-title">开播至今已有</div>
-                        <div class="countdown">
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="broadcast-days">00</div>
-                                <div class="countdown-label">天</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="broadcast-hours">00</div>
-                                <div class="countdown-label">时</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="broadcast-minutes">00</div>
-                                <div class="countdown-label">分</div>
-                            </div>
-                            <div class="countdown-item">
-                                <div class="countdown-number" id="broadcast-seconds">00</div>
-                                <div class="countdown-label">秒</div>
-                            </div>
+                </div>
+                
+                <!-- 开播正计时 -->
+                <div class="timer-container">
+                    <div class="timer-title">开播至今已有</div>
+                    <div class="timer-display">
+                        <div class="timer-unit">
+                            <div class="timer-number" id="broadcast-days">00</div>
+                            <div class="timer-label">天</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-number" id="broadcast-hours">00</div>
+                            <div class="timer-label">时</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-number" id="broadcast-minutes">00</div>
+                            <div class="timer-label">分</div>
+                        </div>
+                        <div class="timer-unit">
+                            <div class="timer-number" id="broadcast-seconds">00</div>
+                            <div class="timer-label">秒</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <div class="avatar">
-            <!-- 使用本地图片 -->
-            <img src="avatar.jpg" alt="霖月">
+        <!-- 记忆翻牌游戏 -->
+        <div class="game-section">
+            <h3>记忆翻牌小游戏</h3>
+            <p>找到所有相同的兔子卡片！</p>
+            <div class="game-board" id="game-board">
+                <!-- 卡片将通过JavaScript生成 -->
+            </div>
+            <div class="game-info">
+                <p>时间: <span id="game-time">0</span>秒 | 匹配: <span id="game-matches">0</span>/6</p>
+                <button class="game-btn" id="restart-game">重新开始</button>
+            </div>
         </div>
         
-        <div class="intro">
-            <h3>你好，我是霖月！</h3>
-            <p>我是一只来自虚拟星空的兔子，喜欢游戏、聊天和与大家分享快乐。从今天开始，让我们一起创造属于我们的美好回忆吧！</p>
+        <!-- 链接区域 -->
+        <div class="links-section">
+            <a href="https://v.douyin.com/0xlEKEqSY8w/" class="link-btn" target="_blank">抖音账号</a>
         </div>
         
-        <div class="blessing">
-            <h3>Zen的祝福</h3>
-            <p>从你第一次开播开始，我就被你的独特魅力所吸引。你的声音如同月光般温柔，你的笑容能照亮整个夜空。虽然我只是众多粉丝中的一员，但我会一直在这里支持你，陪伴你走过每一段旅程。霖月，出道快乐！愿你在这条虚拟之路上绽放最耀眼的光芒，收获满满的快乐与感动。我会一直为你加油！</p>
-        </div>
-        
-        <div class="links">
-            <a href="https://v.douyin.com/0xlEKEqSY8w/" class="link-button" target="_blank">抖音账号</a>
-        </div>
-        
+        <!-- 页脚 -->
         <div class="footer">
             <p>Made for 霖月 by Zen</p>
         </div>
     </div>
 
     <script>
-        // 设置出道时间：2025年10月6日22:00
+        // 设置时间
         const debutTime = new Date('2025-10-06T22:00:00').getTime();
-        
-        // 设置开播时间：2025年6月22日12:00
         const broadcastTime = new Date('2025-06-22T12:00:00').getTime();
         
         // 更新倒计时函数
@@ -336,43 +440,34 @@
             const debutSecondsElement = document.getElementById('debut-seconds');
             const debutTitleElement = document.getElementById('debut-title');
             
-            // 如果倒计时结束，切换为正计时
             if (debutDistance < 0) {
                 // 计算已经过去的时间
                 const timePassed = Math.abs(debutDistance);
                 
-                // 计算天、时、分、秒
                 const daysPassed = Math.floor(timePassed / (1000 * 60 * 60 * 24));
                 const hoursPassed = Math.floor((timePassed % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutesPassed = Math.floor((timePassed % (1000 * 60 * 60)) / (1000 * 60));
                 const secondsPassed = Math.floor((timePassed % (1000 * 60)) / 1000);
                 
-                // 更新显示
                 debutDaysElement.textContent = daysPassed.toString().padStart(2, '0');
                 debutHoursElement.textContent = hoursPassed.toString().padStart(2, '0');
                 debutMinutesElement.textContent = minutesPassed.toString().padStart(2, '0');
                 debutSecondsElement.textContent = secondsPassed.toString().padStart(2, '0');
                 
-                // 更新标题
                 debutTitleElement.textContent = "已经出道";
-                
-                // 添加庆祝效果
                 debutTitleElement.style.color = "#e94560";
                 debutTitleElement.style.fontWeight = "bold";
             } else {
-                // 计算剩余时间
                 const days = Math.floor(debutDistance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((debutDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((debutDistance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((debutDistance % (1000 * 60)) / 1000);
                 
-                // 更新显示
                 debutDaysElement.textContent = days.toString().padStart(2, '0');
                 debutHoursElement.textContent = hours.toString().padStart(2, '0');
                 debutMinutesElement.textContent = minutes.toString().padStart(2, '0');
                 debutSecondsElement.textContent = seconds.toString().padStart(2, '0');
                 
-                // 更新标题
                 debutTitleElement.textContent = "距离出道还有";
                 debutTitleElement.style.color = "#9370db";
                 debutTitleElement.style.fontWeight = "normal";
@@ -386,24 +481,16 @@
             const broadcastMinutesElement = document.getElementById('broadcast-minutes');
             const broadcastSecondsElement = document.getElementById('broadcast-seconds');
             
-            // 计算已经开播的时间
             const broadcastDaysPassed = Math.floor(broadcastDistance / (1000 * 60 * 60 * 24));
             const broadcastHoursPassed = Math.floor((broadcastDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const broadcastMinutesPassed = Math.floor((broadcastDistance % (1000 * 60 * 60)) / (1000 * 60));
             const broadcastSecondsPassed = Math.floor((broadcastDistance % (1000 * 60)) / 1000);
             
-            // 更新显示
             broadcastDaysElement.textContent = broadcastDaysPassed.toString().padStart(2, '0');
             broadcastHoursElement.textContent = broadcastHoursPassed.toString().padStart(2, '0');
             broadcastMinutesElement.textContent = broadcastMinutesPassed.toString().padStart(2, '0');
             broadcastSecondsElement.textContent = broadcastSecondsPassed.toString().padStart(2, '0');
         }
-        
-        // 初始调用一次
-        updateCountdown();
-        
-        // 每秒更新一次
-        setInterval(updateCountdown, 1000);
         
         // 折叠/展开功能
         const timersToggle = document.getElementById('timers-toggle');
@@ -414,6 +501,143 @@
             timersContent.classList.toggle('active');
             toggleIcon.textContent = timersContent.classList.contains('active') ? '▲' : '▼';
         });
+        
+        // 烤头像动画
+        const avatar = document.getElementById('avatar');
+        const fireEmoji = document.getElementById('fire-emoji');
+        
+        function startAvatarAnimation() {
+            // 添加头像跳动效果
+            let jumpCount = 0;
+            const jumpInterval = setInterval(() => {
+                // 头像跳动
+                if (jumpCount % 2 === 0) {
+                    avatar.style.transform = 'scale(1.05)';
+                } else {
+                    avatar.style.transform = 'scale(1)';
+                }
+                
+                // 火焰闪烁效果
+                if (jumpCount % 3 === 0) {
+                    fireEmoji.style.transform = 'scale(1.2) translateY(-5px)';
+                } else {
+                    fireEmoji.style.transform = 'scale(1) translateY(0)';
+                }
+                
+                jumpCount++;
+            }, 500);
+            
+            return jumpInterval;
+        }
+        
+        // 记忆翻牌游戏
+        function initMemoryGame() {
+            const gameBoard = document.getElementById('game-board');
+            const gameTime = document.getElementById('game-time');
+            const gameMatches = document.getElementById('game-matches');
+            const restartButton = document.getElementById('restart-game');
+            
+            const cards = ['🐰', '🐰', '🥕', '🥕', '🌙', '🌙', '⭐', '⭐', '🎮', '🎮', '❤️', '❤️'];
+            let flippedCards = [];
+            let matchedPairs = 0;
+            let gameStarted = false;
+            let startTime = 0;
+            let timerInterval = null;
+            
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            
+            function createCards() {
+                gameBoard.innerHTML = '';
+                const shuffledCards = shuffleArray([...cards]);
+                
+                shuffledCards.forEach((symbol, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'memory-card';
+                    card.dataset.symbol = symbol;
+                    card.dataset.index = index;
+                    card.textContent = symbol;
+                    card.addEventListener('click', flipCard);
+                    gameBoard.appendChild(card);
+                });
+            }
+            
+            function flipCard() {
+                if (!gameStarted) {
+                    gameStarted = true;
+                    startTime = Date.now();
+                    timerInterval = setInterval(updateTimer, 1000);
+                }
+                
+                const card = this;
+                
+                if (card.classList.contains('matched') || card.classList.contains('flipped') || flippedCards.length >= 2) {
+                    return;
+                }
+                
+                card.classList.add('flipped');
+                flippedCards.push(card);
+                
+                if (flippedCards.length === 2) {
+                    checkForMatch();
+                }
+            }
+            
+            function checkForMatch() {
+                const [card1, card2] = flippedCards;
+                
+                if (card1.dataset.symbol === card2.dataset.symbol) {
+                    card1.classList.add('matched');
+                    card2.classList.add('matched');
+                    matchedPairs++;
+                    gameMatches.textContent = matchedPairs;
+                    
+                    flippedCards = [];
+                    
+                    if (matchedPairs === cards.length / 2) {
+                        clearInterval(timerInterval);
+                        setTimeout(() => {
+                            alert(`恭喜！你用了 ${gameTime.textContent} 秒完成了游戏！`);
+                        }, 500);
+                    }
+                } else {
+                    setTimeout(() => {
+                        card1.classList.remove('flipped');
+                        card2.classList.remove('flipped');
+                        flippedCards = [];
+                    }, 1000);
+                }
+            }
+            
+            function updateTimer() {
+                const currentTime = Math.floor((Date.now() - startTime) / 1000);
+                gameTime.textContent = currentTime;
+            }
+            
+            function restartGame() {
+                clearInterval(timerInterval);
+                flippedCards = [];
+                matchedPairs = 0;
+                gameStarted = false;
+                gameTime.textContent = '0';
+                gameMatches.textContent = '0';
+                createCards();
+            }
+            
+            createCards();
+            restartButton.addEventListener('click', restartGame);
+        }
+        
+        // 初始化
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        startAvatarAnimation();
+        initMemoryGame();
     </script>
 </body>
 </html>
